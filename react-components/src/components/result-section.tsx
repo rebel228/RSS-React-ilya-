@@ -1,9 +1,15 @@
 import { Component } from 'react';
 
+import '../index.css';
+import Spinner from './spinner';
+
 export interface Beer {
   id: number;
   name: string;
+  tagline: string;
   description: string;
+  abv: number;
+  image_url: string;
 }
 
 export interface ResultsSectionProps {
@@ -41,6 +47,7 @@ class ResultsSection extends Component<ResultsSectionProps, ResultsSectionState>
     }
 
     try {
+      this.setState({ isLoading: true });
       const response = await fetch(url);
       const data = await response.json();
       this.setState({ searchResults: data, isLoading: false });
@@ -51,19 +58,28 @@ class ResultsSection extends Component<ResultsSectionProps, ResultsSectionState>
 
   render() {
     const { searchResults, isLoading } = this.state;
-    return (
-      <div>
-        {isLoading ? (
-          <div>Loading...</div>
-        ) : (
-          searchResults.map((result) => (
-            <div key={result.id}>
-              <h3>{result.name}</h3>
-              <p>{result.description}</p>
+    return isLoading ? (
+      <Spinner />
+    ) : (
+      <ul className="beer-list">
+        {searchResults.map((beer) => (
+          <li
+            className="beer-card"
+            key={beer.id}
+          >
+            <img
+              src={beer.image_url}
+              alt={beer.name}
+            />
+            <div>
+              <h3>{beer.name}</h3>
+              <h4>{beer.tagline}</h4>
+              <p>{beer.description}</p>
+              <span>abv: {beer.abv}</span>
             </div>
-          ))
-        )}
-      </div>
+          </li>
+        ))}
+      </ul>
     );
   }
 }
