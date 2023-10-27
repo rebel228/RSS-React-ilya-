@@ -1,4 +1,5 @@
 import React, { Component, createRef } from 'react';
+import '../index.css';
 
 export interface SearchSectionProps {
   onSearch: (searchTerm: string) => void;
@@ -14,13 +15,18 @@ class SearchSection extends Component<SearchSectionProps> {
 
   render() {
     return (
-      <div>
+      <div className="form-input form-input-with-button">
+        <button
+          className="button glyphicon glyphicon-search"
+          onClick={this.handleSearch}
+        />
         <input
+          className="input"
           type="text"
           ref={this.inputRef}
           defaultValue={localStorage.getItem('searchTerm') || ''}
+          placeholder="Find beer"
         />
-        <button onClick={this.handleSearch}>Search</button>
       </div>
     );
   }
