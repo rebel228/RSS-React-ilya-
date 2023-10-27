@@ -31,8 +31,9 @@ class Main extends Component {
           <h2>Beer catalogue</h2>
 
           <p>
-            Authentic Italian cuisine. 6 creative dishes to choose from. All from our stone oven,
-            all organic, all delicious.
+            The Beer Academy is a renowned institution for beer enthusiasts, offering educational
+            programs, workshops, and tastings to explore the art and science of brewing beer. Cheers
+            to beer education!
           </p>
         </main>
         <SearchSection onSearch={this.handleSearch} />
