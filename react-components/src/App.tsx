@@ -1,7 +1,10 @@
+import React, { Component } from 'react';
 import Main from './components/main-page';
 
-function App() {
-  return <Main />;
+class App extends Component {
+  render() {
+    return <Main />;
+  }
 }
 
 export default App;
