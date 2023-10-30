@@ -6,6 +6,10 @@ import '../index.css';
 class Main extends Component {
   state = {
     searchTerm: '',
+    throwError: false,
+  };
+  handleThrowError = () => {
+    this.setState({ throwError: true });
   };
 
   handleSearch = (searchTerm: string) => {
@@ -20,7 +24,10 @@ class Main extends Component {
     }
   }
   render() {
-    const { searchTerm } = this.state;
+    const { searchTerm, throwError } = this.state;
+    if (throwError) {
+      throw new Error('Test Error');
+    }
 
     return (
       <div className="container">
@@ -35,6 +42,12 @@ class Main extends Component {
             programs, workshops, and tastings to explore the art and science of brewing beer. Cheers
             to beer education!
           </p>
+          <button
+            className="btn btn-warning"
+            onClick={this.handleThrowError}
+          >
+            Throw Error
+          </button>
         </main>
         <SearchSection onSearch={this.handleSearch} />
         <ResultsSection searchTerm={searchTerm} />
