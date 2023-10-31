@@ -19,6 +19,7 @@ export interface ResultsSectionProps {
 export interface ResultsSectionState {
   searchResults: Beer[];
   isLoading: boolean;
+  hasError: boolean;
 }
 
 class ResultsSection extends Component<ResultsSectionProps, ResultsSectionState> {
@@ -27,6 +28,7 @@ class ResultsSection extends Component<ResultsSectionProps, ResultsSectionState>
     this.state = {
       searchResults: [],
       isLoading: true,
+      hasError: false,
     };
   }
 
@@ -53,14 +55,19 @@ class ResultsSection extends Component<ResultsSectionProps, ResultsSectionState>
       this.setState({ searchResults: data, isLoading: false });
     } catch (error) {
       console.error('Error fetching search results:', error);
+      this.setState({ searchResults: [], isLoading: false, hasError: true });
     }
   };
 
   render() {
     const { searchResults, isLoading } = this.state;
-    return isLoading ? (
-      <Spinner />
-    ) : (
+    if (isLoading) {
+      return <Spinner />;
+    }
+    if (!Array.isArray(searchResults)) {
+      return <p>No search results found.</p>;
+    }
+    return (
       <ul className="beer-list">
         {searchResults.map((beer) => (
           <li
